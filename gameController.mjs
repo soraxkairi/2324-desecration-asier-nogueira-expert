@@ -12,8 +12,7 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
     let eruditoIsCreated = false;
     let property = -1;
     let EruditoCreated;
-
-
+    
     if (villain.powerstats.intelligence > superHero.powerstats.intelligence) {
         players.push(villain);
         players.push(superHero);
@@ -22,12 +21,21 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
         players.push(superHero);
         players.push(villain);
     }
-
+    
+    players.forEach((element) => {
+        element.powerstats.gafas = false;
+    });
     while (villain.powerstats.hitpoints > 0 && superHero.powerstats.hitpoints > 0) {
         
         if (turn === 0) {
+
             console.log(`ROUND: ${round}`);
             console.log(`TURNO DE ${players[turn].name}`);
+            if (players[turn].powerstats.gafas === true)
+            {
+                console.log("El jugador ha queado mareado y se ha quitado las gafas");
+                continue;
+            }
             if (eruditoChances >= 3) {
                 let chance = Math.floor(Math.random() * 3 + 1);
                 if (chance === 2 || eruditoChances > 5)
@@ -36,10 +44,11 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
                     property = dice20CErudito(D20C);
                     if (!eruditoIsCreated)
                     {
-
-                        EruditoCreated = new Erudito("El erudito X.G",property,property+1);
-                        console.log(ElErudito);
+                        let eruditoGlasses = property + 1;
+                        EruditoCreated = new Erudito("El erudito X.G",property,eruditoGlasses);
+                        console.log(EruditoCreated);
                     }
+                    angerMode(EruditoCreated,property,players);
                     eruditoChances  = 0;
                     if (turn === 0)
                     {
@@ -59,6 +68,11 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
         else if (turn === 1){
             console.log(`ROUND: ${round}`);
             console.log(`TURNO DE ${players[turn].name}`);
+            if (players[turn].powerstats.gafas === true)
+            {
+                console.log("El jugador ha queado mareado y se ha quitado las gafas");
+                continue;
+            }
             if (eruditoChances >= 3) {
                 let chance = Math.floor(Math.random() * 3 + 1);
                 if (chance === 2 || eruditoChances > 5)
@@ -69,9 +83,8 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
                     {
                         let eruditoGlasses = property + 1;
                         EruditoCreated = new Erudito("El erudito X.G",property,eruditoGlasses);
-                        console.log(EruditoCreated);
                     }
-                    angerMode(EruditoCreated.Erudito,property,players);
+                    angerMode(EruditoCreated,property,players);
                     eruditoChances  = 0;
                     if (turn === 0)
                     {
@@ -110,6 +123,7 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
 
 function angerMode(erudito, diceValue,player){
     const dice10C = getDado10C();
+    console.log(erudito);
     if (erudito.angerLevel > 0 && erudito.angerLevel < 4)
     {
         console.log("PIFIA ATAQUE ")
