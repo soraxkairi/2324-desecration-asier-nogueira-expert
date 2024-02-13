@@ -7,14 +7,12 @@ const villainZarate = getVillain(apiData);
 
 const superHero = getSuperHero(apiData);
 
-const ElErudito = new Erudito("El Erudito X.G",0);
-console.log(ElErudito);
 
 const D100C = getDado100C();
 const D20C = getDado20C();
 const D3C = getDado3C();
 
-gameStart(villainZarate,superHero,D100C,D20C,D3C,ElErudito);
+gameStart(villainZarate,superHero,D100C,D20C,D3C);
 // console.log(D100C);
 // console.log(D20C);
 // console.log(D3C);

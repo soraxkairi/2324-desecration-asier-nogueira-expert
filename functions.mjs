@@ -1,5 +1,4 @@
 
-
 function getVillain(data){
 let villain = -1;
     data.forEach( (element) => {
@@ -57,11 +56,21 @@ function getDado5C(){
     }
     return D5C
 }
+
+function getDado10C(){
+    let D10C = [];
+    for (let i = 1; i <= 10; i++) {
+        D10C.push(i);
+    }
+    return D10C
+}
+
 export {
     getVillain,
     getSuperHero,
     getDado100C,
     getDado20C,
     getDado3C,
-    getDado5C
+    getDado5C,
+    getDado10C
 }

@@ -1,4 +1,5 @@
-import { getDado5C } from "./functions.mjs";
+import { getDado5C,getDado10C } from "./functions.mjs";
+import { Erudito } from "./eruditoClass.mjs";
 
 let turn = 0;
 
@@ -8,6 +9,10 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
     const players = [];
     let round = 1;
     let eruditoChances = 0;
+    let eruditoIsCreated = false;
+    let property = -1;
+    let EruditoCreated;
+
 
     if (villain.powerstats.intelligence > superHero.powerstats.intelligence) {
         players.push(villain);
@@ -28,9 +33,13 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
                 if (chance === 2 || eruditoChances > 5)
                 {
                     console.log("EL ERUDITO HA APARECIDO ESTE TURNO NO SE ACTUA");
-                    
+                    property = dice20CErudito(D20C);
+                    if (!eruditoIsCreated)
+                    {
 
-                    
+                        EruditoCreated = new Erudito("El erudito X.G",property,property+1);
+                        console.log(ElErudito);
+                    }
                     eruditoChances  = 0;
                     if (turn === 0)
                     {
@@ -55,7 +64,14 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
                 if (chance === 2 || eruditoChances > 5)
                 {
                     console.log("EL ERUDITO HA APARECIDO ESTE TURNO NO SE ACTUA");
-                    let property = dice20CErudito(D20C);
+                    property = dice20CErudito(D20C);
+                    if (!eruditoIsCreated)
+                    {
+                        let eruditoGlasses = property + 1;
+                        EruditoCreated = new Erudito("El erudito X.G",property,eruditoGlasses);
+                        console.log(EruditoCreated);
+                    }
+                    angerMode(EruditoCreated.Erudito,property,players);
                     eruditoChances  = 0;
                     if (turn === 0)
                     {
@@ -75,6 +91,8 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
         }
     }
 
+
+
     players.forEach( (element) => {
         if (element.powerstats.hitpoints < 0)
         {
@@ -89,6 +107,78 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
     })
 }
 
+
+function angerMode(erudito, diceValue,player){
+    const dice10C = getDado10C();
+    if (erudito.angerLevel > 0 && erudito.angerLevel < 4)
+    {
+        console.log("PIFIA ATAQUE ")
+        player[turn].powerstats.hitpoints -= diceValue;
+        player[turn].powerstats.strength =  Math.floor(player[turn].powerstats.strength/2);
+
+
+    }
+    else if (erudito.angerLevel > 3 && erudito.angerLevel < 7)
+    {
+        console.log("PIFIA ATAQUE ")
+        player[turn].powerstats.hitpoints -= diceValue;
+        player[turn].powerstats.strength =  Math.floor(player[turn].powerstats.strength/2);
+
+    }
+    else if (erudito.angerLevel > 6 && erudito.angerLevel < 10)
+    {
+        console.log("CAOS")
+
+    }
+    else if (erudito.angerLevel > 9 && erudito.angerLevel < 14)
+    {
+        console.log("AULLIDO");
+        let diceValue = dice10C[Math.floor(Math.random() * dice10C.length)];
+        erudito.hitpointsNoGlass -= diceValue;
+        if (erudito.hitpointsNoGlass < 0)
+        {
+            console.log("EL ERUDITO A MUERTO");
+        }
+
+    }
+    else if (erudito.angerLevel > 13 && erudito.angerLevel < 17)
+    {
+        console.log("GRANUJA");
+        if (turn === 0)
+        {
+            player[turn + 1].powerstats.gafas = true;
+            player[turn - 1].powerstats.gafas = false;
+
+        }
+        else {
+        player[turn - 1].powerstats.gafas = true;
+        player[turn + 1].powerstats.gafas = false;
+        }
+        console.log("El adversario se ha llevado las gafas");
+    }
+    else if (erudito.angerLevel > 16 && erudito.angerLevel < 19)
+    {
+        console.log("PERSPICAZ");
+        let diceValue = dice10C[Math.floor(Math.random() * dice10C.length)];
+        erudito.hitpointsNoGlass -= diceValue;
+        if (erudito.hitpointsNoGlass < 0)
+        {
+            console.log("EL ERUDITO A MUERTO");
+        }
+    }
+    else {
+        console.log("ENDEMONIADO");
+        console.log("EL ERUDITO A MUERTO POR LO QUE SUS GAFAS DESAPARECEN");
+        player.forEach((element) => {
+            if (element.gafas === true)
+            {
+                element.gafas = false;
+            }
+        })
+
+
+    }
+}
 
 
 function throwDices(D100C, D20C, D3C, player) {

@@ -1,8 +1,8 @@
 export class Erudito {
-    constructor(name, angerLevel) {
+    constructor(name, angerLevel,hitpointsNoGlass) {
         this.name = name;
         this.angerLevel = angerLevel;
-        this.hitpointsGlass = 1 + angerLevel;
-        this.hitpointsNoGlass = "Invincible";
+        this.hitpointsGlass = "Invincible"
+        this.hitpointsNoGlass = hitpointsNoGlass;
     }
 }
