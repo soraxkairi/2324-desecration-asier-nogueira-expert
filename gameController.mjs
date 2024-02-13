@@ -2,11 +2,13 @@ import { getDado5C } from "./functions.mjs";
 
 let turn = 0;
 
-function gameStart(villain, superHero, D100C, D20C, D3C) {
+function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
     console.log(`${villain.name} VS ${superHero.name}`);
     console.log("--------------------------------------------------");
     const players = [];
     let round = 1;
+    let eruditoChances = 0;
+
     if (villain.powerstats.intelligence > superHero.powerstats.intelligence) {
         players.push(villain);
         players.push(superHero);
@@ -18,22 +20,58 @@ function gameStart(villain, superHero, D100C, D20C, D3C) {
 
     while (villain.powerstats.hitpoints > 0 && superHero.powerstats.hitpoints > 0) {
         
-        console.log(`ROUND: ${round}`);
-        
         if (turn === 0) {
+            console.log(`ROUND: ${round}`);
             console.log(`TURNO DE ${players[turn].name}`);
+            if (eruditoChances >= 3) {
+                let chance = Math.floor(Math.random() * 3 + 1);
+                if (chance === 2 || eruditoChances > 5)
+                {
+                    console.log("EL ERUDITO HA APARECIDO ESTE TURNO NO SE ACTUA");
+                    
+
+                    
+                    eruditoChances  = 0;
+                    if (turn === 0)
+                    {
+                        turn = 1;
+                    }
+                    else if (turn === 1) {
+                        turn = 0;
+                    }
+                }
+            }
             throwDices(D100C, D20C, D3C, players);
 
             turn = 1;
             round++;
+            eruditoChances++;
         }
         else if (turn === 1){
-
+            console.log(`ROUND: ${round}`);
             console.log(`TURNO DE ${players[turn].name}`);
+            if (eruditoChances >= 3) {
+                let chance = Math.floor(Math.random() * 3 + 1);
+                if (chance === 2 || eruditoChances > 5)
+                {
+                    console.log("EL ERUDITO HA APARECIDO ESTE TURNO NO SE ACTUA");
+                    let property = dice20CErudito(D20C);
+                    eruditoChances  = 0;
+                    if (turn === 0)
+                    {
+                        turn = 1;
+                    }
+                    else if (turn === 1) {
+                        turn = 0;
+                    }
+                }
+            }
+
 
             throwDices(D100C, D20C, D3C, players);
             turn = 0;
             round++;
+            eruditoChances++;
         }
     }
 
@@ -70,6 +108,12 @@ function throwDices(D100C, D20C, D3C, player) {
 }
 
 
+function dice20CErudito(D20C) {
+    let diceValue = D20C[Math.floor(Math.random() * D20C.length)];
+    console.log(`Valor del dado de 20 caras : ${diceValue}`);
+    return diceValue;
+
+}
 
 
 function dice20C(D20C, player, D3C) {
