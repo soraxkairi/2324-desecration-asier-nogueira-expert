@@ -24,6 +24,7 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
     
     players.forEach((element) => {
         element.powerstats.gafas = false;
+        console.log(element);
     });
     while (villain.powerstats.hitpoints > 0 && superHero.powerstats.hitpoints > 0) {
         
@@ -128,6 +129,7 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
 function angerMode(erudito, diceValue,player){
     const dice10C = getDado10C();
     console.log(erudito);
+    
     if (erudito.angerLevel > 0 && erudito.angerLevel < 4)
     {
         console.log("PIFIA ATAQUE ")
