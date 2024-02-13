@@ -34,9 +34,11 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
             if (players[turn].powerstats.gafas === true)
             {
                 console.log("El jugador ha queado mareado y se ha quitado las gafas");
+                console.log("El erudito ha recuperado las gafas y desaparecera");
+                EruditoCreated = null;
                 continue;
             }
-            if (eruditoChances >= 3) {
+            if (eruditoChances >= 3 && eruditoIsCreated != null) {
                 let chance = Math.floor(Math.random() * 3 + 1);
                 if (chance === 2 || eruditoChances > 5)
                 {
@@ -71,9 +73,11 @@ function gameStart(villain, superHero, D100C, D20C, D3C,ElErudito) {
             if (players[turn].powerstats.gafas === true)
             {
                 console.log("El jugador ha queado mareado y se ha quitado las gafas");
+                console.log("El erudito ha recuperado las gafas y desaparecera");
+                EruditoCreated = null;
                 continue;
             }
-            if (eruditoChances >= 3) {
+            if (eruditoChances >= 3 && eruditoIsCreated != null) {
                 let chance = Math.floor(Math.random() * 3 + 1);
                 if (chance === 2 || eruditoChances > 5)
                 {
@@ -129,7 +133,7 @@ function angerMode(erudito, diceValue,player){
         console.log("PIFIA ATAQUE ")
         player[turn].powerstats.hitpoints -= diceValue;
         player[turn].powerstats.strength =  Math.floor(player[turn].powerstats.strength/2);
-
+        console.log(`${player[turn].name} ha recibido el daño ${player[turn].powerstats}`);
 
     }
     else if (erudito.angerLevel > 3 && erudito.angerLevel < 7)
@@ -137,11 +141,12 @@ function angerMode(erudito, diceValue,player){
         console.log("PIFIA ATAQUE ")
         player[turn].powerstats.hitpoints -= diceValue;
         player[turn].powerstats.strength =  Math.floor(player[turn].powerstats.strength/2);
+        console.log(`${player[turn].name} ha recibido el daño ${player[turn].powerstats}`);
 
     }
     else if (erudito.angerLevel > 6 && erudito.angerLevel < 10)
     {
-        console.log("CAOS")
+        console.log("CAOS no ha pasado nada");
 
     }
     else if (erudito.angerLevel > 9 && erudito.angerLevel < 14)
@@ -150,9 +155,11 @@ function angerMode(erudito, diceValue,player){
         let diceValue = dice10C[Math.floor(Math.random() * dice10C.length)];
         erudito.hitpointsNoGlass -= diceValue;
         if (erudito.hitpointsNoGlass < 0)
+        console.log(`${erudito.name} ha recibido el daño: ${erudito.hitpointsNoGlass}`);
         {
             console.log("EL ERUDITO A MUERTO");
         }
+
 
     }
     else if (erudito.angerLevel > 13 && erudito.angerLevel < 17)
@@ -175,6 +182,8 @@ function angerMode(erudito, diceValue,player){
         console.log("PERSPICAZ");
         let diceValue = dice10C[Math.floor(Math.random() * dice10C.length)];
         erudito.hitpointsNoGlass -= diceValue;
+        console.log(`${erudito.name} ha recibido el daño: ${erudito.hitpointsNoGlass}`);
+
         if (erudito.hitpointsNoGlass < 0)
         {
             console.log("EL ERUDITO A MUERTO");
@@ -192,6 +201,7 @@ function angerMode(erudito, diceValue,player){
 
 
     }
+
 }
 
 
