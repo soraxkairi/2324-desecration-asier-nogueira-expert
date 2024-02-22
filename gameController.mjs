@@ -118,9 +118,10 @@ function angerMode(erudito, player) {
         let diceValue = getDado(10);
         erudito.hitpointsNoGlass -= diceValue;
         if (erudito.hitpointsNoGlass < 0)
-            console.log(`${erudito.name} ha recibido el daño: ${erudito.hitpointsNoGlass}`);
         {
+            console.log(`${erudito.name} ha recibido el daño: ${erudito.hitpointsNoGlass}`);
             console.log("EL ERUDITO A MUERTO");
+            eruditoIsDead = true;
         }
 
 
