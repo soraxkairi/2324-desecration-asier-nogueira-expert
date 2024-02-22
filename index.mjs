@@ -1,19 +1,18 @@
-import apiData from "./gameService.mjs";
-import { getVillain,getSuperHero,getDado100C,getDado20C,getDado3C} from "./functions.mjs";
-import { Erudito } from "./eruditoClass.mjs";
+import { getVillain, getSuperHero } from "./functions.mjs";
 import { gameStart } from "./gameController.mjs";
+import { getData } from "./gameService.mjs";
 
-const villainZarate = getVillain(apiData);
+async function initializeGame() {
+    try {
+        const data = await getData();
+        const villainZarate = getVillain(data);
+        const superHero = getSuperHero(data);
 
-const superHero = getSuperHero(apiData);
+        gameStart(villainZarate, superHero);
+    } catch (error) {
+        // Manejar errores, por ejemplo, imprimir en la consola
+        console.error('Error al inicializar el juego:', error);
+    }
+}
 
-
-const D100C = getDado100C();
-const D20C = getDado20C();
-const D3C = getDado3C();
-
-gameStart(villainZarate,superHero,D100C,D20C,D3C);
-// console.log(D100C);
-// console.log(D20C);
-// console.log(D3C);
-
+initializeGame();
