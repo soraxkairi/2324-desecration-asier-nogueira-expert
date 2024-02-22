@@ -3,8 +3,10 @@ import { Erudito } from "./eruditoClass.mjs";
 
 let turn = 0;
 let eruditoIsDead = false;
+let eruditoHaveTheGlasses = true;
 
 function gameStart(villain, superHero) {
+    console.log("WELCOME TO THE COMBAT ARENA")
     console.log(`${villain.name} VS ${superHero.name}`);
     console.log("--------------------------------------------------");
     const players = [];
@@ -20,10 +22,17 @@ function gameStart(villain, superHero) {
         players.push(superHero);
         players.push(villain);
     }
+    console.log("Listado de atributos");
+    console.log("-------------------------------------");
+
+    players.forEach((element) => {
+        console.log(element.name);
+        console.log(element.powerstats);
+
+    })
 
     let valueEruditoHitpoints = getDado(20);
     let EruditoCreated = new Erudito("El erudito X.G", property, valueEruditoHitpoints);
-    console.log(EruditoCreated);
 
     while (villain.powerstats.hitpoints > 0 && superHero.powerstats.hitpoints > 0) {
         console.log("-----------------------------------------");
@@ -33,7 +42,10 @@ function gameStart(villain, superHero) {
 
             eruditoTurn += (Math.random() * (6 - 3 + 1)) + 3;
             console.log("El erudito ha aparecido");
-            EruditoCreated.angerLevel = getDado(20);
+            if (eruditoHaveTheGlasses === true);
+            {
+                EruditoCreated.angerLevel = getDado(20);
+            }
             angerMode(EruditoCreated, players);
 
 
@@ -141,6 +153,7 @@ function angerMode(erudito, player) {
             {
                 console.log(`${element.name} se ha llevado las gafas`);
                 console.log(element.powerstats);
+                eruditoHaveTheGlasses = false;
             }
         })
 
@@ -166,6 +179,7 @@ function angerMode(erudito, player) {
             if (element.gafas === true) {
                 element.gafas = false;
             }
+            eruditoHaveTheGlasses = true;
             console.log(element.name);
             console.log(element.powerstats);
         })
